@@ -298,7 +298,14 @@ namespace TestingWpfApp
             Application.Current.Shutdown();
         }
 
+        // Other related to debug console
+
         private void ShowDebugConsole_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClearDebugConsole(object sender, RoutedEventArgs e)
         {
 
         }
@@ -396,7 +403,6 @@ namespace TestingWpfApp
         {
             DebugConsoleView.Items.Add("Right Mouse Button Up");
         }
-
     }
     public class CustomSearcher
     {

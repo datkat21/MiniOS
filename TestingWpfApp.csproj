@@ -17,6 +17,9 @@
     <None Remove="Assets\errorLightpng.png" />
     <None Remove="Assets\errorOutlineLight.png" />
     <None Remove="Assets\leaveWhite.png" />
+    <None Remove="Assets\miniosLogo_readme.png" />
+    <None Remove="Assets\miniosLogo_small.png" />
+    <None Remove="Assets\minios_logo.png" />
     <None Remove="Assets\mobileLight.png" />
     <None Remove="Assets\mobileNoGray.png" />
     <None Remove="Assets\mobileNoWhite.png" />
@@ -63,6 +66,15 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\leaveWhite.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\miniosLogo_readme.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\miniosLogo_small.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\minios_logo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\mobileLight.png">
