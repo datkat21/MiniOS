@@ -149,7 +149,7 @@
                                 </ContextMenu>
                             </Border.ContextMenu>
                         </Border>
-                        
+
                         <!-- Store -->
                         <Border Tag="StoreWindow" BorderBrush="#505050" MouseLeave="GeneralMouseLeave" MouseEnter="GeneralMouseEnter" PreviewMouseDown="GeneralPreviewMouseDown" PreviewMouseLeftButtonUp="StoreApp_PreviewMouseUp"  x:Name="StoreAppBG" Height="50" Background="#252525" BorderThickness="0">
                             <Image x:Name="StoreApp" Width="40" Height="40" Source="pack://application:,,,/Assets/crateLight.png" />
@@ -167,7 +167,7 @@
                 </DockPanel>
             </Border>
             <wpfx:WindowContainer x:Name="TheWindowContainer">
-                <wpfx:ChildWindow  CloseButtonClicked="GeneralCloseButtonClicked" Tag="SettingsAppBG" DesignerWindowState="Open" WindowBackground="#353535" Foreground="White" Padding="0" Canvas.Left="459" BorderBrush="Transparent" Background="#3f3f3f" WindowStyle="SingleBorderWindow" CaptionForeground="White" CaptionIcon="pack://application:,,,/Assets/cogLight.png" DockPanel.Dock="Top" Name="SettingsWindow" Caption="Settings"  Width="374" Height="230" IsModal="False" Canvas.Top="160">
+                <wpfx:ChildWindow  CloseButtonClicked="GeneralCloseButtonClicked" Tag="SettingsAppBG" DesignerWindowState="Open" WindowBackground="#353535" Foreground="White" Padding="0" Canvas.Left="249" BorderBrush="Transparent" Background="#3f3f3f" WindowStyle="SingleBorderWindow" CaptionForeground="White" CaptionIcon="pack://application:,,,/Assets/cogLight.png" DockPanel.Dock="Top" Name="SettingsWindow" Caption="Settings"  Width="374" Height="230" IsModal="False" Canvas.Top="214">
                     <Border BorderBrush="Transparent" BorderThickness="0" Padding="5">
                         <StackPanel>
                             <TextBlock FontSize="20" Text="General Settings">
@@ -188,7 +188,7 @@
                     </DockPanel> -->
                     <DockPanel>
                         <Border Background="#3f3f3f" DockPanel.Dock="Top" Padding="5">
-                            <CheckBox Checked="ShowHiddenEvents" DockPanel.Dock="Top" Style="{DynamicResource CheckBoxStyle1}"  IsChecked="False" Foreground="White" Background="#353535" Content="Show hidden events" />
+                            <CheckBox DockPanel.Dock="Top" Style="{DynamicResource CheckBoxStyle1}"  IsChecked="False" Foreground="White" Background="#353535" Content="Show hidden events" />
                         </Border>
                         <ListBox Foreground="White" Style="{DynamicResource ListBox_Dark}" DockPanel.Dock="Bottom" x:Name="DebugConsoleView">
                             <ListBox.Resources>
@@ -216,7 +216,7 @@
                         </ListBox>
                     </DockPanel>
                 </wpfx:ChildWindow>
-                <wpfx:ChildWindow CloseButtonClicked="GeneralCloseButtonClicked" Tag="StoreAppBG" Foreground="White" WindowBackground="#353535" WindowInactiveBackground="#505050" Canvas.Left="265" BorderBrush="Transparent" Background="#3f3f3f" WindowStartupLocation="Manual" WindowStyle="SingleBorderWindow" CaptionForeground="White" CaptionIcon="pack://application:,,,/Assets/cartLight.png" DockPanel.Dock="Top" Name="StoreWindow" Caption="Store"  Width="444" Height="236" IsModal="False" Canvas.Top="44">
+                <wpfx:ChildWindow CloseButtonClicked="GeneralCloseButtonClicked" Tag="StoreAppBG" Foreground="White" WindowBackground="#353535" WindowInactiveBackground="#505050" Canvas.Left="293" BorderBrush="Transparent" Background="#3f3f3f" WindowStartupLocation="Manual" WindowStyle="SingleBorderWindow" CaptionForeground="White" CaptionIcon="pack://application:,,,/Assets/cartLight.png" DockPanel.Dock="Top" Name="StoreWindow" Caption="Store"  Width="444" Height="236" IsModal="False" Canvas.Top="228">
                     <DockPanel>
                     </DockPanel>
                 </wpfx:ChildWindow>

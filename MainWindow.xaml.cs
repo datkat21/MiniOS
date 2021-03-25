@@ -116,6 +116,20 @@ namespace TestingWpfApp
 
         private void ClickPreview_BG(Border bdr, bool LetGo = false, string color = null, string thick = null)
         {
+
+            // create listbox item example
+
+            // ListBoxItem itm = new()
+            // {
+            //     Tag = "hidden",
+            //     Content = "4"
+            // };
+            // DebugConsoleView.Items.Add(itm);
+            // DebugConsoleView.SelectedIndex = DebugConsoleView.Items.Count - 1;
+            // DebugConsoleView.ScrollIntoView(DebugConsoleView.SelectedItem);
+
+
+
             ThicknessConverter tc = new();
             Thickness newthick = bdr.BorderThickness;
             if (thick != null)
@@ -129,27 +143,11 @@ namespace TestingWpfApp
                     {
                         bdr.Background = (SolidColorBrush)new BrushConverter().ConvertFromString(color);
                         bdr.BorderThickness = newthick;
-                        ListBoxItem itm = new()
-                        {
-                            Tag = "hidden",
-                            Content = "1"
-                        };
-                        DebugConsoleView.Items.Add(itm);
-                        DebugConsoleView.SelectedIndex = DebugConsoleView.Items.Count - 1;
-                        DebugConsoleView.ScrollIntoView(DebugConsoleView.SelectedItem);
                     }
                     else
                     {
                         bdr.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#252525");
                         bdr.BorderThickness = newthick;
-                        ListBoxItem itm = new()
-                        {
-                            Tag = "hidden",
-                            Content = "2"
-                        };
-                        DebugConsoleView.Items.Add(itm);
-                        DebugConsoleView.SelectedIndex = DebugConsoleView.Items.Count - 1;
-                        DebugConsoleView.ScrollIntoView(DebugConsoleView.SelectedItem);
                     }
                     break;
 
@@ -158,27 +156,11 @@ namespace TestingWpfApp
                     {
                         bdr.Background = (SolidColorBrush)new BrushConverter().ConvertFromString(color);
                         bdr.BorderThickness = newthick;
-                        ListBoxItem itm = new()
-                        {
-                            Tag = "hidden",
-                            Content = "3"
-                        };
-                        DebugConsoleView.Items.Add(itm);
-                        DebugConsoleView.SelectedIndex = DebugConsoleView.Items.Count - 1;
-                        DebugConsoleView.ScrollIntoView(DebugConsoleView.SelectedItem);
                     }
                     else
                     {
                         bdr.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#353535");
                         bdr.BorderThickness = newthick;
-                        ListBoxItem itm = new()
-                        {
-                            Tag = "hidden",
-                            Content = "4"
-                        };
-                        DebugConsoleView.Items.Add(itm);
-                        DebugConsoleView.SelectedIndex = DebugConsoleView.Items.Count - 1;
-                        DebugConsoleView.ScrollIntoView(DebugConsoleView.SelectedItem);
                     }
                     break;
             }
@@ -336,8 +318,9 @@ namespace TestingWpfApp
                 Image image = new Image();
                 image.Source = new BitmapImage(new Uri(openFileDialog.FileName));
                 myBrush.ImageSource = image.Source;
-                Grid grid = new Grid();
-                grid.Background = myBrush;
+                gridObj.Background = myBrush;
+                // Xceed.Wpf.Toolkit.MessageBox.Show("Changed background to " + openFileDialog.FileName);
+                // Xceed.Wpf.Toolkit.MessageBox.Show("Grid background: " + gridObj.Background);
             }
 
         }
@@ -358,7 +341,8 @@ namespace TestingWpfApp
                 // storeOutputBox.Text += responseBody;
                 deserialized = JsonConvert.DeserializeObject<StoreApps>(responseBody);
                 int index = 0;
-                StackPanel sp = new() { 
+                StackPanel sp = new()
+                {
                     Orientation = Orientation.Horizontal
                 };
                 foreach (StoreApps_Apps App in deserialized.Apps)
@@ -372,9 +356,9 @@ namespace TestingWpfApp
                     DebugConsoleView.Items.Add("Got " + deserialized.Apps[index].Name + " v" + deserialized.Apps[index].Version);
                     Image appIcon = new()
                     {
-                      Source = new BitmapImage(new Uri(deserialized.Apps[index].Icon)),
-                      Width = 30,
-                      Height = 30
+                        Source = new BitmapImage(new Uri(deserialized.Apps[index].Icon)),
+                        Width = 30,
+                        Height = 30
                     };
                     TextBlock appName = new()
                     {
@@ -413,20 +397,6 @@ namespace TestingWpfApp
             DebugConsoleView.Items.Add("Right Mouse Button Up");
         }
 
-        private void ShowHiddenEvents(object sender, RoutedEventArgs e)
-        {
-            int index = 0;
-            try { 
-            foreach (ListBoxItem item in DebugConsoleView.Items)
-            {
-                DebugConsoleView.Items[index].ToString();
-                    index++;
-            }
-            } catch (Exception er)
-            {
-                DebugConsoleView.Items.Add(er.Message);
-            }
-        }
     }
     public class CustomSearcher
     {
