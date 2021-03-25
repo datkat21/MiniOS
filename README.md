@@ -1,6 +1,7 @@
 ![MiniOS](https://raw.githubusercontent.com/datkat21/MiniOS/master/Assets/miniosLogo_readme.png)
 <br>
 A simple "OS" created in WPF.
+
 Created as a tribute to my old project with the same name that got lost due to a hard drive wipe.
 
 
