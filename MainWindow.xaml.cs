@@ -9,6 +9,9 @@ using System.Collections.Specialized;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using System.Reflection;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -24,6 +27,18 @@ namespace TestingWpfApp
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
+
+    public class CSharpScriptEngine
+    {
+        private static ScriptState<object> scriptState = null;
+        public static object Execute(string code)
+        {
+            scriptState = scriptState == null ? CSharpScript.RunAsync(code).Result : scriptState.ContinueWithAsync(code).Result;
+            if (scriptState.ReturnValue != null && !string.IsNullOrEmpty(scriptState.ReturnValue.ToString()))
+                return scriptState.ReturnValue;
+            return null;
+        }
+    }
 
     public class StoreApps
     {
@@ -254,6 +269,8 @@ namespace TestingWpfApp
             //    };
             //    tv.Items.Add(itm);
             //}
+            newWindow.Tag = "FilesAppBG";
+            newWindow.CloseButtonClicked += new RoutedEventHandler(GeneralCloseButtonClicked);
             filesWindowCount++;
             TheWindowContainer.Children.Add(newWindow);
             newWindow.Show();
@@ -280,7 +297,22 @@ namespace TestingWpfApp
         {
             var btn = sender as ChildWindow;
             Border bdr = this.FindName(btn.Tag.ToString()) as Border;
-            bdr.BorderThickness = new Thickness(0, 0, 0, 0);
+            if (bdr.Name == "FilesAppBG")
+            {
+                if (filesWindowCount == 1)
+                {
+                    bdr.BorderThickness = new Thickness(0, 0, 0, 0);
+                    filesWindowCount--;
+                }
+                else
+                {
+                    filesWindowCount--;
+                }
+            }
+            else
+            {
+                bdr.BorderThickness = new Thickness(0, 0, 0, 0);
+            }
         }
 
         // Other Buttons Clicked
@@ -298,16 +330,27 @@ namespace TestingWpfApp
             Application.Current.Shutdown();
         }
 
+        private void WelcomeModalClose_Clicked(object sender, RoutedEventArgs e)
+        {
+            WelcomeWindow.Close();
+        }
+
+        private void WelcomeModalStart_Clicked(object sender, RoutedEventArgs e)
+        {
+            WelcomeWindow.Close();
+            Xceed.Wpf.Toolkit.MessageBox.Show("This is currently not finished.");
+        }
+
         // Other related to debug console
 
         private void ShowDebugConsole_Click(object sender, RoutedEventArgs e)
         {
-
+            DebugConsoleWindow.Show();
         }
 
         private void ClearDebugConsole(object sender, RoutedEventArgs e)
         {
-
+            DebugConsoleView.Items.Clear();
         }
 
         private void ChangeBackground_Click(object sender, RoutedEventArgs e)
@@ -348,17 +391,14 @@ namespace TestingWpfApp
                 // storeOutputBox.Text += responseBody;
                 deserialized = JsonConvert.DeserializeObject<StoreApps>(responseBody);
                 int index = 0;
-                StackPanel sp = new()
-                {
-                    Orientation = Orientation.Horizontal
-                };
                 foreach (StoreApps_Apps App in deserialized.Apps)
                 {
                     DockPanel mp = new()
                     {
                         Margin = new Thickness(5),
                         LastChildFill = false,
-                        VerticalAlignment = VerticalAlignment.Top
+                        VerticalAlignment = VerticalAlignment.Top,
+                        Width = 200
                     };
                     DebugConsoleView.Items.Add("Got " + deserialized.Apps[index].Name + " v" + deserialized.Apps[index].Version);
                     Image appIcon = new()
@@ -370,22 +410,41 @@ namespace TestingWpfApp
                     TextBlock appName = new()
                     {
                         FontSize = 20,
-                        Text = deserialized.Apps[index].Name
+                        Text = deserialized.Apps[index].Name,
+                        TextAlignment = TextAlignment.Center
                     };
                     TextBlock appDesc = new()
                     {
-                        Text = deserialized.Apps[index].Description
+                        Text = deserialized.Apps[index].Description,
+                        TextAlignment = TextAlignment.Center
+                    };
+                    TextBlock appDownload_tb = new()
+                    {
+                        Text = "Download",
+                        TextAlignment = TextAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center
+                    };
+                    Button appDownload = new()
+                    {
+                        Content = appDownload_tb,
+                        Style = this.FindResource("FlatButtonStyle") as Style,
+                        Margin = new Thickness(0, 5, 0, 0),
+                        Width = 100,
+                        HorizontalAlignment = HorizontalAlignment.Center
                     };
                     DockPanel.SetDock(appName, Dock.Top);
                     DockPanel.SetDock(appIcon, Dock.Top);
                     DockPanel.SetDock(appDesc, Dock.Bottom);
+                    DockPanel.SetDock(appDownload, Dock.Bottom);
                     mp.Children.Add(appIcon);
                     mp.Children.Add(appName);
+                    mp.Children.Add(appDownload);
                     mp.Children.Add(appDesc);
-                    sp.Children.Add(mp);
+                    StorePanel.Children.Add(mp);
+                    Xceed.Wpf.Toolkit.MessageBox.Show("Adding " + appName);
                     index++;
                 }
-                StoreWindow.Content = sp;
+
             }
             catch (HttpRequestException err)
             {
@@ -402,6 +461,15 @@ namespace TestingWpfApp
         private void GeneralRightMouseButtonUp(object sender, MouseButtonEventArgs e)
         {
             DebugConsoleView.Items.Add("Right Mouse Button Up");
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            await CSharpScript.EvaluateAsync(@"string[] lines =
+        {
+            ""First line"", ""Second line"", ""Third line"" 
+        };
+        await File.WriteAllLinesAsync(""WriteLines.txt"", lines);", ScriptOptions.Default.AddImports("System", "System.IO", "System.Threading.Tasks"));
         }
     }
     public class CustomSearcher

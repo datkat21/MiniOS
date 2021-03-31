@@ -8,7 +8,21 @@
         mc:Ignorable="d"
         Icon="pack://application:,,,/Assets/crateLight.png"
         Title="MiniOS (remastered)" Height="450" MinHeight="450" Width="800" MinWidth="800">
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation From="0" To="1" Duration="0:0:0.5" Storyboard.TargetProperty="Opacity">
+                        <DoubleAnimation.EasingFunction>
+                            <CubicEase  EasingMode="EaseIn"  />
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
     <Window.Resources>
+
         <Style TargetType="{x:Type ToolTip}">
             <Setter Property="Background" Value="#252525" />
             <Setter Property="Foreground" Value="White" />
@@ -189,11 +203,11 @@
     </Window.Resources>
     <Grid Background="#151515" x:Name="gridObj">
         <DockPanel LastChildFill="True">
-            <Border DockPanel.Dock="Left" Width="75" Padding="10" Background="#252525" BorderBrush="#252525" BorderThickness="0">
+            <Border Panel.ZIndex="999" Margin="0,0,10,0" CornerRadius="0" DockPanel.Dock="Left" Width="75" Padding="10" Background="#252525" BorderBrush="#252525" BorderThickness="0">
                 <DockPanel LastChildFill="False">
                     <StackPanel DockPanel.Dock="Top" Margin="0" Background="#252525">
                         <!-- Settings -->
-                        <Border ToolTip="Settings" Tag="SettingsWindow" BorderBrush="#505050" MouseLeave="GeneralMouseLeave" MouseEnter="GeneralMouseEnter" PreviewMouseDown="GeneralPreviewMouseDown" PreviewMouseLeftButtonUp="SettingsApp_PreviewMouseUp"  x:Name="SettingsAppBG" Height="50" Background="#252525" >
+                        <Border Width="50" CornerRadius="0" ToolTip="Settings" Tag="SettingsWindow" BorderBrush="#505050" MouseLeave="GeneralMouseLeave" MouseEnter="GeneralMouseEnter" PreviewMouseDown="GeneralPreviewMouseDown" PreviewMouseLeftButtonUp="SettingsApp_PreviewMouseUp"  x:Name="SettingsAppBG" Height="50" Background="#252525" >
                             <Image x:Name="SettingsApp" Width="40" Height="40" Source="pack://application:,,,/Assets/cogLight.png" />
                             <Border.ContextMenu>
                                 <ContextMenu StaysOpen="True">
@@ -210,15 +224,16 @@
                         </Border>
 
                         <!-- Store -->
-                        <Border ToolTip="Store" Tag="StoreWindow" BorderBrush="#505050" MouseLeave="GeneralMouseLeave" MouseEnter="GeneralMouseEnter" PreviewMouseDown="GeneralPreviewMouseDown" PreviewMouseLeftButtonUp="StoreApp_PreviewMouseUp"  x:Name="StoreAppBG" Height="50" Background="#252525" BorderThickness="0">
+                        <Border Width="50" CornerRadius="0" ToolTip="Store" Tag="StoreWindow" BorderBrush="#505050" MouseLeave="GeneralMouseLeave" MouseEnter="GeneralMouseEnter" PreviewMouseDown="GeneralPreviewMouseDown" PreviewMouseLeftButtonUp="StoreApp_PreviewMouseUp"  x:Name="StoreAppBG" Height="50" Background="#252525" BorderThickness="0">
                             <Image x:Name="StoreApp" Width="40" Height="40" Source="pack://application:,,,/Assets/basketLight.png" />
                         </Border>
                         <!-- Files -->
-                        <Border ToolTip="Files" Tag="FilesWindow" BorderBrush="#505050" MouseLeave="GeneralMouseLeave" MouseEnter="GeneralMouseEnter" PreviewMouseDown="GeneralPreviewMouseDown" PreviewMouseLeftButtonUp="FilesAppBG_PreviewMouseUp"  x:Name="FilesAppBG" Height="50" Background="#252525" BorderThickness="0">
+                        <Border Width="50" CornerRadius="0" ToolTip="Files" Tag="FilesWindow" BorderBrush="#505050" MouseLeave="GeneralMouseLeave" MouseEnter="GeneralMouseEnter" PreviewMouseDown="GeneralPreviewMouseDown" PreviewMouseLeftButtonUp="FilesAppBG_PreviewMouseUp"  x:Name="FilesAppBG" Height="50" Background="#252525" BorderThickness="0">
+                            
                             <Image x:Name="FilesApp" Width="40" Height="40" Source="pack://application:,,,/Assets/openLight.png" />
                         </Border>
                     </StackPanel>
-                    <Border ToolTip="Leave" BorderBrush="#505050" DockPanel.Dock="Bottom" MouseLeave="GeneralMouseLeave" MouseEnter="GeneralMouseEnter" PreviewMouseDown="GeneralPreviewMouseDown" PreviewMouseLeftButtonUp="LeaveButtonBG_PreviewMouseUp" x:Name="LeaveButtonBG" Height="50" Background="#252525" >
+                    <Border Width="50" CornerRadius="0" ToolTip="Leave" BorderBrush="#505050" DockPanel.Dock="Bottom" MouseLeave="GeneralMouseLeave" MouseEnter="GeneralMouseEnter" PreviewMouseDown="GeneralPreviewMouseDown" PreviewMouseLeftButtonUp="LeaveButtonBG_PreviewMouseUp" x:Name="LeaveButtonBG" Height="50" Background="#252525" >
 
                         <Image x:Name="LeaveButton" Width="40" Height="40" Source="pack://application:,,,/Assets/leaveWhite.png" />
 
@@ -235,7 +250,7 @@
        BorderThickness WindowInactiveBackground Background
        WindowStyle 
        CaptionForeground  -->
-                <wpfx:ChildWindow DesignerWindowState="Closed" WindowState="Open" Width="500" Height="150" CloseButtonVisibility="Collapsed" Caption="Welcome to MiniOS"  WindowStartupLocation="Center" Canvas.Left="136" Canvas.Top="195">
+                <wpfx:ChildWindow x:Name="WelcomeWindow" IsModal="True" DesignerWindowState="Closed" WindowState="Open" Width="500" Height="150" CloseButtonVisibility="Collapsed" Caption="Welcome to MiniOS"  WindowStartupLocation="Center" Canvas.Left="136" Canvas.Top="195">
                     <Border Padding="5">
                         <StackPanel>
                             <DockPanel LastChildFill="False" Height="109">
@@ -244,10 +259,10 @@
                             Let's give you a brief tour.
                                 </TextBlock>
                                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" >
-                                    <Button Margin="0,0,15,0" DockPanel.Dock="Bottom" HorizontalAlignment="Right" Style="{StaticResource FlatButtonStyle}" Width="160">
+                                    <Button Click="WelcomeModalClose_Clicked" Margin="0,0,15,0" DockPanel.Dock="Bottom" HorizontalAlignment="Right" Style="{StaticResource FlatButtonStyle}" Width="160">
                                         <TextBlock TextAlignment="Center" Text="Close" />
                                     </Button>
-                                    <Button DockPanel.Dock="Bottom" HorizontalAlignment="Right" Style="{StaticResource FlatButtonStyle}" Width="160">
+                                    <Button Click="WelcomeModalStart_Clicked" DockPanel.Dock="Bottom" HorizontalAlignment="Right" Style="{StaticResource FlatButtonStyle}" Width="160">
                                         <TextBlock TextAlignment="Center" Text="Start Tour" />
                                     </Button>
                                 </StackPanel>
@@ -262,20 +277,24 @@
                         </StackPanel>
                     </Border>
                 </wpfx:ChildWindow>
-                <wpfx:ChildWindow  CloseButtonClicked="GeneralCloseButtonClicked" Tag="SettingsAppBG" Canvas.Left="284" CaptionIcon="pack://application:,,,/Assets/cogLight.png" DockPanel.Dock="Top" Name="SettingsWindow" Caption="Settings"  Width="374" Height="230" IsModal="False" Canvas.Top="167">
+                <wpfx:ChildWindow DesignerWindowState="Closed" CloseButtonClicked="GeneralCloseButtonClicked" Tag="SettingsAppBG" Canvas.Left="351" CaptionIcon="pack://application:,,,/Assets/cogLight.png" DockPanel.Dock="Top" Name="SettingsWindow" Caption="Settings"  Width="374" Height="230" IsModal="False" Canvas.Top="204">
                     <Border BorderBrush="Transparent" BorderThickness="0" Padding="5">
                         <StackPanel>
                             <TextBlock FontSize="20" Text="General Settings">
                             </TextBlock>
-                            <TextBlock Margin="0,5,0,5">
-                                Hello World!
-                            </TextBlock>
-                            <Button x:Name="ShowDebugConsole" Click="ShowDebugConsole_Click" Width="168" HorizontalAlignment="Left" Height="37">Show debug console</Button>
-                            <Button x:Name="ChangeBackground" Margin="0,5,0,0" Click="ChangeBackground_Click" Width="168" HorizontalAlignment="Left" Height="37">Pick background...</Button>
+                            <Button Style="{StaticResource FlatButtonStyle}" x:Name="ShowDebugConsole" Click="ShowDebugConsole_Click" Width="168" HorizontalAlignment="Left" Height="37">
+                                <TextBlock TextAlignment="Center" VerticalAlignment="Center">Show debug console</TextBlock>
+                            </Button>
+                            <Button Style="{StaticResource FlatButtonStyle}" x:Name="ChangeBackground" Margin="0,5,0,0" Click="ChangeBackground_Click" Width="168" HorizontalAlignment="Left" Height="37">
+                                <TextBlock TextAlignment="Center" VerticalAlignment="Center">Pick background...</TextBlock>
+                            </Button>
+                            <Button Style="{StaticResource FlatButtonStyle}" Margin="0,5,0,0" Click="Button_Click" Width="168" HorizontalAlignment="Left" Height="37">
+                                <TextBlock TextAlignment="Center" VerticalAlignment="Center">Run Ahra()</TextBlock>
+                            </Button>
                         </StackPanel>
                     </Border>
                 </wpfx:ChildWindow>
-                <wpfx:ChildWindow WindowBackground="#353535" x:Name="smolWindow" Width="300" Height="250" WindowState="Open" Caption="Debug Console" CaptionForeground="White" Canvas.Left="284" Canvas.Top="57">
+                <wpfx:ChildWindow  WindowStartupLocation="Manual" HorizontalAlignment="Right" VerticalAlignment="Bottom" WindowBackground="#353535" x:Name="DebugConsoleWindow" Width="300" Height="250" Caption="Debug Console" CaptionForeground="White" Canvas.Left="415" Canvas.Top="182">
                     <!-- <DockPanel Background="#353535">
                         <Grid DockPanel.Dock="Top" Background="#353535" Margin="5">
                             <CheckBox Style="{DynamicResource CheckBoxStyle1}"  IsChecked="True" Foreground="White" Background="#353535" Content="Show hidden events" />
@@ -284,7 +303,7 @@
                     <DockPanel>
                         <Border Background="#3f3f3f" DockPanel.Dock="Top" Padding="5">
                             <!--  <CheckBox DockPanel.Dock="Top" Style="{DynamicResource CheckBoxStyle1}"  IsChecked="False" Foreground="White" Background="#353535" Content="Show hidden events" />-->
-                            <Button Width="100" HorizontalContentAlignment="Stretch" Style="{StaticResource FlatButtonStyle}">
+                            <Button Click="ClearDebugConsole" Width="100" HorizontalContentAlignment="Stretch" Style="{StaticResource FlatButtonStyle}">
                                 <TextBlock TextAlignment="Center" Text="Clear" />
                             </Button>
                         </Border>
@@ -314,14 +333,18 @@
                         </ListBox>
                     </DockPanel>
                 </wpfx:ChildWindow>
-                <wpfx:ChildWindow CloseButtonClicked="GeneralCloseButtonClicked" Tag="StoreAppBG" Foreground="White" WindowBackground="#353535" WindowInactiveBackground="#505050" Canvas.Left="293" BorderBrush="Transparent" Background="#3f3f3f" WindowStartupLocation="Manual" WindowStyle="SingleBorderWindow" CaptionForeground="White" CaptionIcon="pack://application:,,,/Assets/cartLight.png" DockPanel.Dock="Top" Name="StoreWindow" Caption="Store"  Width="444" Height="236" IsModal="False" Canvas.Top="198">
-                    <DockPanel>
-                    </DockPanel>
+                <wpfx:ChildWindow DesignerWindowState="Closed" CloseButtonClicked="GeneralCloseButtonClicked" Tag="StoreAppBG" Foreground="White" WindowBackground="#353535" WindowInactiveBackground="#505050" Canvas.Left="173" BorderBrush="Transparent" Background="#3f3f3f" WindowStartupLocation="Manual" WindowStyle="SingleBorderWindow" CaptionForeground="White" CaptionIcon="pack://application:,,,/Assets/cartLight.png" DockPanel.Dock="Top" Name="StoreWindow" Caption="Store"  Width="444" Height="236" IsModal="False" Canvas.Top="204">
+                    <ScrollViewer Width="440" x:Name="MyScrollViewer"
+                VerticalScrollBarVisibility="Auto">
+                        <WrapPanel Width="440" Orientation="Horizontal" x:Name="StorePanel">
+
+                        </WrapPanel>
+                    </ScrollViewer>
                 </wpfx:ChildWindow>
             </wpfx:WindowContainer>
 
         </DockPanel>
-        <wpfx:WindowContainer Visibility="Collapsed" x:Name="LogOffBG">
+        <wpfx:WindowContainer Visibility="Collapsed" x:Name="LogOffBG" Grid.RowSpan="2">
             <wpfx:ChildWindow WindowBorderBrush="Transparent" WindowBorderThickness="0" CloseButtonVisibility="Collapsed" Caption="Confirmation" CaptionForeground="White" WindowBackground="#202020" BorderThickness="0" BorderBrush="Transparent" CloseButtonClicked="GeneralCloseButtonClicked" Tag="LogOffBG" IsModal="True" Width="379" x:Name="LogOffConfirm" WindowStartupLocation="Center" Canvas.Left="171" Canvas.Top="182">
                 <Border BorderBrush="Transparent" BorderThickness="0" Padding="5" Background="#202020">
                     <DockPanel Background="#202020">

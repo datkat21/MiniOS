@@ -31,6 +31,7 @@
     <None Remove="Assets\syncLWhite.png" />
     <None Remove="Assets\syncRWhite.png" />
     <None Remove="Assets\tabletLight.png" />
+    <None Remove="Assets\terminalLight.png" />
     <None Remove="Assets\tetheredLight.png" />
     <None Remove="Assets\wrenchLight.png" />
     <None Remove="Assets\yesLight.png" />
@@ -110,6 +111,9 @@
     <Resource Include="Assets\tabletLight.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\terminalLight.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\tetheredLight.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -126,7 +130,9 @@
 
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.0.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.9.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.CodeDom" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
