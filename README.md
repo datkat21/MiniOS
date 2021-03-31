@@ -9,6 +9,10 @@ Created as a tribute to my old project with the same name that got lost due to a
 
 I call it that because it's similar to Windows in a way and it's like my own mini "OS".
 
+### <strong>DISCLAIMER: This is NOT a real operating system!
+  
+I based the name off of my old project which was called MiniOS because it's based off the name PowerPoint OS which is in of itself a fake but usable "OS" in PowerPoint.</strong>
+
 ## Features
 
 - ###  Window system
